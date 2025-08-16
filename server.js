@@ -3,8 +3,8 @@ import cors from "cors";
 import { Ollama } from "ollama";
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+app.use(cors({ origin: "*" }));
+app.use(express.json({ limit: "50mb" }));
 
 app.post("/intelligentable/askAI", async (req, res) => {
   const ollama = new Ollama({ host: "http://127.0.0.1:11434" });
