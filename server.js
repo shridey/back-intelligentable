@@ -12,6 +12,8 @@ app.post("/intelligentable/askAI", async (req, res) => {
   try {
     const { model, prompt, data } = req.body;
 
+    console.log("Received request:", { model, prompt, data });
+
     const systemPrompt = `You are a helpful data assistant. Here is the dataset in JSON:
 ${JSON.stringify(data)}
 
@@ -25,7 +27,14 @@ Answer clearly and concisely based only on the data.`;
       stream: false,
     });
 
+    console.log("AI response:", response);
+
     const answer = response.message.content;
+
+    if (!answer) {
+      console.error("No answer provided by AI");
+      return res.status(500).json({ error: "AI did not provide an answer" });
+    }
 
     res.json({ answer });
   } catch (err) {
