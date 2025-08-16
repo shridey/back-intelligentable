@@ -3,8 +3,8 @@ import cors from "cors";
 import { Ollama } from "ollama";
 
 const app = express();
-app.use(cors({ origin: "*" }));
-app.use(express.json({ limit: "50mb" }));
+app.use(cors());
+app.use(express.json());
 
 app.post("/intelligentable/askAI", async (req, res) => {
   const ollama = new Ollama({ host: "http://127.0.0.1:11434" });
@@ -43,6 +43,4 @@ Answer clearly and concisely based only on the data.`;
   }
 });
 
-app.listen(3000, "0.0.0.0", () =>
-  console.log("AI backend running on http://0.0.0.0:3000")
-);
+app.listen(3000, () => console.log("AI backend running on port 3000"));
